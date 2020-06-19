@@ -21,4 +21,4 @@ git flow hotfix start hotfix_branch
 
 
 changes:
-this is a new change
+this is a new change and it's great
