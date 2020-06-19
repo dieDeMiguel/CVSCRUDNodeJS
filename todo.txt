@@ -7,3 +7,8 @@ Important:
 El código tiene que ser limpio, en inglés y documentado
 
  GIT: Del master branch crea uno que se llame develop y otro release y desde develop crea el branch con la pequeña funcionabilidad, Haces tu feature y generas el pr a develop, Gitflow vamos a usar como estrategia de branching
+
+Git FLow:
+git flow init
+git flow feature start feature_branch
+git flow feature finish feature_branch
