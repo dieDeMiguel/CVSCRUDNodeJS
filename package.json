@@ -1,0 +1,27 @@
+{
+  "name": "cvscrudnodejs",
+  "version": "1.0.0",
+  "description": "This is a CRUD for CVS's files using NodeJS with different 3rd party libraries. ",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dieDeMiguel/CVSCRUDNodeJS.git"
+  },
+  "keywords": [
+    "node",
+    "js",
+    "javascript",
+    "CRUD",
+    "CVS",
+    "express"
+  ],
+  "author": "dieDeMiguel",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dieDeMiguel/CVSCRUDNodeJS/issues"
+  },
+  "homepage": "https://github.com/dieDeMiguel/CVSCRUDNodeJS#readme"
+}
