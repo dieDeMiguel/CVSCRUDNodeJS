@@ -1,4 +1,4 @@
-# CVSCRUDNodeJS
+# CSVCRUDNodeJS
 Crud for CSV files using nodeJs
 
 -What the project does:
