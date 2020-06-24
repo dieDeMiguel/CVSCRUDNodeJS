@@ -20,12 +20,19 @@ router.get('/items', function(req, res, next) {
 
 //Create an Item
 router.post('/items', function(req, res, next) {
-  let item = JSON.stringify({'id': req.body.id, 'name': req.body.name});
-  
-  fs.appendFile('items.txt', item, (err) => {
-    if(err) throw err;
-  console.log("Item was saved into memory");
-  });
+  if(req.body) {
+    let item = JSON.stringify({'id': req.body.id, 'name': req.body.name});
+    try {
+      fs.appendFile('items.txt', item, (err) => {
+        if(err) throw err;
+        console.log("Item was saved into memory");
+        res.status(201).send(req.body);
+      });
+    } catch(e) {
+     res.status(500).send(e);
+    }
+  }
 });
+
 
 module.exports = router;
