@@ -23,7 +23,7 @@ router.post('/items', function(req, res, next) {
   if(req.body) {
     let item = JSON.stringify({'id': req.body.id, 'name': req.body.name});
     try {
-      fs.appendFile('items.txt', item, (err) => {
+      fs.appendFile('items.csv', item, (err) => {
         if(err) throw err;
         console.log("Item was saved into memory");
         res.status(201).send(req.body);
