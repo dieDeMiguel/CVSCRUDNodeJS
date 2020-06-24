@@ -10,8 +10,20 @@ router.get('/', function(req, res, next) {
 
 // GET objects array complete
 router.get('/items', function(req, res, next) {
-  res.send('Here you will find the array parsed');
+  
+    try {
+      fs.readFile('items.txt', (err, data) => {
+        if (err) {
+          throw err;
+        } 
+        res.status(201).send(data);
+      })
+    } catch(e) {
+     res.status(500).send(e);
+    }
 });
+  
+
 
 // // GET item in the array
 // router.get('/items/:id', function(req, res, next) {
