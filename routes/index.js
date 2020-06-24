@@ -10,9 +10,9 @@ router.get('/', function(req, res, next) {
 
 // GET objects array complete
 router.get('/items', function(req, res, next) {
-  
+    const readFile = 'items.csv'
     try {
-      fs.readFile('items.txt', (err, data) => {
+      fs.readFile(readFile, (err, file) => {
         if (err) {
           throw err;
         } 
