@@ -32,18 +32,38 @@ router.get('/items', function(req, res, next) {
 
 //Create an Item
 router.post('/items', function(req, res, next) {
-  if(req.body) {
-    let item = JSON.stringify({'id': req.body.id, 'name': req.body.name});
-    try {
-      fs.appendFile('items.csv', item, (err) => {
-        if(err) throw err;
-        console.log("Item was saved into memory");
-        res.status(201).send(req.body);
-      });
-    } catch(e) {
-     res.status(500).send(e);
-    }
+
+  if(req.body.id && req.body.name) {
+    newItem = JSON.stringify({'id': req.body.id, 'name': req.body.name});
+    fs.writeFile('items.csv', newItem, (err) => {
+      if(err) throw err;
+      console.log('The file has been sent');
+      res.status(201).send(newItem);
+    })
+  } else if(req.body.id) {
+    res.send('The item must have a name')
+  } else if(req.body.name) {
+    res.send('The item must have an Id')
+  } else {
+    res.send('The item must have name and id')
   }
+
+ 
+
+
+  // if(req.body) {
+  //   let item = JSON.stringify({'id': req.body.id, 'name': req.body.name});
+  //   try {
+  //     fs.appendFile('items.csv', item, (err) => {
+  //       if(err) throw err;
+  //       console.log("Item was saved into memory");
+  //       res.status(201).send(req.body);
+  //     });
+  //   } catch(e) {
+  //    res.status(500).send(e);
+  //   }
+  // }
+
 });
 
 
