@@ -1,7 +1,7 @@
 const fs = require('fs');
 
-const storeItem = (id, name, callback) => {
-    newItem = JSON.stringify({'id': id, 'name': name});
+function saveItem(id, name, callback) {
+    const newItem = JSON.stringify({'id': id, 'name': name});
     const fileName = 'items.csv'
     fs.writeFile(fileName, newItem, (error) => {
       if(error) {
