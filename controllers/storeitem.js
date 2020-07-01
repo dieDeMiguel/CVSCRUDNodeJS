@@ -7,7 +7,7 @@ const storeItem = (id, name, callback) => {
       if(error) {
         callback('Error', error);
       }
-      callback(undefined, newItem);
+      callback(null, newItem);
     })
   }
   
