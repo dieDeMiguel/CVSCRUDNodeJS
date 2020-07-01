@@ -1,5 +1,4 @@
 const fs = require('fs');
-const { call } = require('../app');
 
 const readFile = (fileName, callback) => {
    fs.readFile(fileName, (error, data) => {
@@ -18,4 +17,4 @@ const readFile = (fileName, callback) => {
   
 
 
-module.exports = readFile
+module.exports = readFile;
