@@ -1,9 +1,8 @@
 var express = require('express');
 var router = express.Router();
 const fs = require('fs');
-const app = require('../app');
-const validateItem = require('../controllers/validation');
-const readFile = require('../controllers/readfile');
+const validateItem = require('../utils/validation');
+const readFile = require('../utils/readfile');
 
 
 /* GET home page. */
