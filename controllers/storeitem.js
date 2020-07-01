@@ -1,16 +1,30 @@
 const fs = require('fs');
 
-function saveItem(id, name, callback) {
-    const newItem = JSON.stringify({'id': id, 'name': name});
-    const fileName = 'items.csv'
-    fs.writeFile(fileName, newItem, (error) => {
-      if(error) {
-        callback('Error', error);
+function saveItem(item, callback) {
+    const itemName = item.name.toLowerCase().trim();
+    const itemId = item.name.trim();
+    if(Number.isInteger(itemId) && itemName.length >3)  {
+        const newItem = JSON.stringify({'id': itemId, 'name': itemName});
+        const fileName = 'items.csv'
+        fs.writeFile(fileName, newItem, (error) => {
+            if(error) {
+                callback('Error', error);
+            }
+            callback(null, newItem);
+        });
+    }  else if(!itemName && Number.isInteger(itemId)) {
+        
+        callback('The item must have a name', null);
+      } else if(!itemId && itemName) {
+        callback('The item must have an ID', null);
+      } else if(itemName.length < 4 && Number.isInteger(itemId)) {
+        console.log(itemName.length)
+        callback('The name must have at least 4 words', null);
+      } else if(!itemName && !itemId) {
+          callback('The item must have a name and an Id', null);
       }
-      callback(null, newItem);
-    })
-  }
+}
   
 
 
-module.exports = storeItem
+module.exports = saveItem;

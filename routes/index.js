@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 const fs = require('fs');
 const app = require('../app');
-const idNameValidation = require('../controllers/validation');
+const validateItem = require('../controllers/validation');
 const readFile = require('../controllers/readfile');
 
 
@@ -25,7 +25,7 @@ router.get('/items', function(req, res) {
 
 //Create an Item with error handling
 router.post('/items', function(req, res) {
-  idNameValidation(req.body.id, req.body.name, (error, response) => {
+  validateItem(req.body, (error, response) => {
     if(error) {
       res.send({
         Error: error
