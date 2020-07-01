@@ -5,14 +5,18 @@ const storeItem = require('./storeitem');
     if(id && name.length > 3) {
       storeItem(id, name, (error, response) => {
         if(error) {
-          callback(error, undefined);
+          callback(error, null);
         }
-        callback(undefined, response)
+        callback(null, response)
       })
-    } else if(id) {
-      callback('The item must have a name', undefined);
+    } else if(!name) {
+      callback('The item must have a name', null);
+    } else if(!id) {
+      callback('The item must have an ID', null);
+    } else if(name.length <=3) {
+      callback('The name must have at least 4 words', null);
     } else {
-      callback('The item must have an ID', undefined);
+        callback('The item must have a name and an Id', null);
     }
   }
 
