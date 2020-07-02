@@ -1,8 +1,9 @@
 var express = require('express');
 var router = express.Router();
 const fs = require('fs');
-const validateItem = require('../utils/validation');
-const readFile = require('../utils/readfile');
+const {createItem} = require('../controllers/items');
+const storeItem = require('../utils/storeitem');
+
 
 
 /* GET home page. */
@@ -24,16 +25,9 @@ router.get('/items', function(req, res) {
 
 //Create an Item with error handling
 router.post('/items', function(req, res) {
-  validateItem(req.body, (error, response) => {
-    if(error) {
-      res.send({
-        Error: error
-      }).status(500)
-    } else {
-      res.send(response).status(201);
-    }
-  })
-})
+  createItem(req.body, storeItem)
+  res.send(req.body);
+});
 
 
 
