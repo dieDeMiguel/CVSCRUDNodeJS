@@ -6,7 +6,7 @@ function storeItem(item, callback) {
     const fileName = 'items.csv';
     fs.writeFile(fileName, stringItem, (error) => {
         if(error) {
-            callback(error);
+            return callback(error);
         }
     });
 }
