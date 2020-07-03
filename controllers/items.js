@@ -1,15 +1,32 @@
 const fs = require('fs');
 
-const storeItem = require('../utils/storeitem');
+const {storeItem} = require('../utils/storeitem');
 const readFile = require('../utils/readfile');
 const validateData = require('../utils/validation');
 
-function createItem(item, callbackFunction) {
+const  createItem = (item, callback) =>{
     if(validateData(item)) {
-       return callbackFunction(item);
+       storeItem({item}, (error, response) => {
+          if(error) {
+              callback(error, null);
+          } else {
+              callback(null, response);
+          }
+       });
     }
 }
 
+const readFileFromMemory = (fileName, callback) => {
+    readFile(fileName, (error, response) => {
+        if(error) {
+            callback(error, null)
+        } else {
+            callback(null, response);
+        }
+    })
+}
+
 module.exports = {
-    createItem: createItem
+    createItem: createItem,
+    readFileFromMemory: readFileFromMemory
 };
