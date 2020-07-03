@@ -1,8 +1,7 @@
 var express = require('express');
 var router = express.Router();
-const fs = require('fs');
-const {createItem, readFileFromMemory } = require('../controllers/items');
-const storeItem = require('../utils/storeitem');
+const {createItem, readFileFromMemory, getByID } = require('../controllers/items');
+
 
 
 
@@ -27,6 +26,13 @@ router.post('/items', function(req, res) {
     error == null ? res.status(201).send(response) : res.status(412) .send(error);
   });
 });
+
+//Fetch an object by ID
+router.get('/items/:id', function(req, res) {
+  getByID(req.body.fileName, req.params.id, (error, response) => {
+    error == null ? res.status(200).send(response) : res.status(400).send(error);
+  })
+})
 
 
 

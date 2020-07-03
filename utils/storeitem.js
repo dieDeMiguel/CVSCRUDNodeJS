@@ -14,6 +14,4 @@ function storeItem(objectToStore, callback) {
 }
 
 
-module.exports = {
-    storeItem: storeItem
-}
+module.exports = storeItem;

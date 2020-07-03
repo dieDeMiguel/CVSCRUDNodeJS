@@ -1,8 +1,9 @@
 const fs = require('fs');
 
-const {storeItem} = require('../utils/storeitem');
+const storeItem = require('../utils/storeitem');
 const readFile = require('../utils/readfile');
 const validateData = require('../utils/validation');
+const fetchOneByID = require('../utils/getoneitem');
 
 const  createItem = (item, callback) =>{
     if(validateData(item)) {
@@ -26,7 +27,24 @@ const readFileFromMemory = (fileName, callback) => {
     })
 }
 
+const getByID = (fileName, id, callback) => {
+    const item = {
+        id: id,
+        name: fileName
+    }
+    if(validateData(item)) {
+        fetchOneByID(item, (error, response) => {
+            if(error) {
+                callback(error, null);
+            } else {
+                callback(null, response);
+            }
+        })
+    }
+}
+
 module.exports = {
     createItem: createItem,
-    readFileFromMemory: readFileFromMemory
+    readFileFromMemory: readFileFromMemory,
+    getByID: getByID
 };
