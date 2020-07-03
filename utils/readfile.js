@@ -5,7 +5,7 @@ function readFile(fileName, callback) {
         if(error) {
             callback('The file couldn\'t be read', null);
         } else {
-            callback(null, data)
+            callback(null, data);
         }
     })
 }
