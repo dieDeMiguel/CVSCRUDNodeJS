@@ -1,6 +1,6 @@
 const fs = require('fs');
 const readFile = require('./readfile');
-const {validateDataFileName } = require('./validation');
+const { validateDataFileName } = require('./validation');
 
 function fetchOneByID(fileName, id, callback) {
     if(validateDataFileName(fileName, id)) {
