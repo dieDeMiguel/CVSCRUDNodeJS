@@ -15,7 +15,6 @@ function validateDataName(name, id) {
 function validateDataFileName(fileName, id=1) {
   fileName = fileName.trim();
   id = parseInt(id);
-  //console.log(fileName, id)
   if(!Number.isInteger(id) || fileName.length <6) {
     return false
   } else if(Number.isInteger(id) && fileName.length > 5)  {
