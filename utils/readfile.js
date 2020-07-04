@@ -5,7 +5,11 @@ function readFile(fileName, callback) {
         if(error) {
             callback('The file couldn\'t be read', null);
         } else {
-            callback(null, data)
+            data = JSON.parse(data.toString('utf8'));
+            callback(null, {
+                id: data.id,
+                name: data.name
+            })
         }
     })
 }
