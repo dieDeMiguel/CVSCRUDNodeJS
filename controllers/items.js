@@ -1,7 +1,7 @@
 const fs = require('fs');
 const storeItem = require('../utils/storeitem');
 const readFile = require('../utils/readfile');
-const {validateDataName, validateDataFileName } = require('../utils/validation');
+const { validateDataName, validateDataFileName } = require('../utils/validation');
 const fetchOneByID = require('../utils/getoneitem');
 
 const  createItem = (item, callback) =>{
@@ -18,7 +18,7 @@ const  createItem = (item, callback) =>{
     }
 }
 
-const readFileFromMemory = (fileName, callback) => {
+const listItems = (fileName, callback) => {
     if(validateDataFileName(fileName)) {
         readFile(fileName, (error, response) => {
             if(error) {
@@ -30,7 +30,7 @@ const readFileFromMemory = (fileName, callback) => {
     }
 }
 
-const getByID = (fileName, id, callback) => {
+const getItem = (fileName, id, callback) => {
     if(validateDataFileName(fileName, id)) {
         fetchOneByID(fileName, id, (error, response) => {
             if(error) {
@@ -46,9 +46,9 @@ const getByID = (fileName, id, callback) => {
 
 
 //Update Item route.
-const updateItem = (itemToUpdate, callback) => {
+const updateItem = (itemToUpdate, fileName, callback) => {
     if(validateDataName(itemToUpdate.name, itemToUpdate.id)) {
-        fetchOneByID(itemToUpdate.fileName, itemToUpdate.id, (error, response) => {
+        fetchOneByID(fileName, itemToUpdate.id, (error, response) => {
             if(error) {
                 callback(error, null);
             } else {
@@ -70,7 +70,7 @@ const updateItem = (itemToUpdate, callback) => {
  
 module.exports = {
     createItem: createItem,
-    readFileFromMemory: readFileFromMemory,
-    getByID: getByID,
+    listItems: listItems,
+    getItem: getItem,
     updateItem: updateItem
 };
