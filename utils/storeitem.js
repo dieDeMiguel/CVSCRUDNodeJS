@@ -12,5 +12,4 @@ function storeItem(objectToStore, callback) {
     })
 }
 
-
 module.exports = storeItem;

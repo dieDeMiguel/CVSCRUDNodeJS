@@ -13,7 +13,5 @@ function readFile(fileName, callback) {
         }
     })
 }
-  
-
 
 module.exports = readFile;

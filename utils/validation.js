@@ -23,8 +23,6 @@ function validateDataFileName(fileName, id=1) {
   } 
 }
   
-
-
 module.exports = {
   validateDataName: validateDataName,
   validateDataFileName: validateDataFileName
