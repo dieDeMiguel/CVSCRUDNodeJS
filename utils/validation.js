@@ -1,18 +1,31 @@
 const fs = require('fs');
   
-function validateItem(item){
-  item.name = item.name.trim();
-  if(!item.id || !item.name) {
-    return({
-      error: "The item must have and ID and a name"
-    });
-  } else if(item.name.length < 4 && Number.isInteger(item.id)) {
-    throw new Error('The name must be at least 4 words long');
-  } else if(item.id && item.name.length >3)  {
+function validateDataName(name, id) {
+  id = parseInt(id);
+  name = name.trim();
+  if(id.length == 0 || name.length == 0) {
+    return false
+  } else if(name.length < 4 && Number.isInteger(id)) {
+    return false
+  } else if(id && name.length >3)  {
+    return true;
+  } 
+}
+
+function validateDataFileName(fileName, id=1) {
+  fileName = fileName.trim();
+  id = parseInt(id);
+  //console.log(fileName, id)
+  if(!Number.isInteger(id) || fileName.length <6) {
+    return false
+  } else if(Number.isInteger(id) && fileName.length > 5)  {
     return true;
   } 
 }
   
 
 
-module.exports = validateItem;
+module.exports = {
+  validateDataName: validateDataName,
+  validateDataFileName: validateDataFileName
+}
