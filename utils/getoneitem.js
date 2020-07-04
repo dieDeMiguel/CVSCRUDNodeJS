@@ -1,23 +1,20 @@
 const fs = require('fs');
 const readFile = require('./readfile');
+const {validateDataFileName } = require('./validation');
 
-function fetchOneByID(item, callback) {
-    readFile(item.name, (error, response) => {
-        if(error) {
-            callback(error, null)
-        } else {
-            //Yes Charly, I know the next line is crazy, the reason why I choosed this approach I can explain
-            const file = JSON.parse(Buffer.from(response.toString('base64'), 'base64').toString('ascii'));
-
-            for(itemInFile of file ) {
-                //why does the statement "file.id == item.id" is only true with 2 equal signs and not with 3?
-                if(itemInFile.id == item.id) {
-                    callback(null, itemInFile);
-                } 
-            }  
-            callback('Unable to find an Object whithin the file with the provided ID', null);  
-        }
-    })
+function fetchOneByID(fileName, id, callback) {
+    if(validateDataFileName(fileName, id)) {
+        readFile(fileName, (error, response) => {
+            if(error) {
+                callback(error, null)
+            } else {
+                const file = response;
+                file.id == id ? callback(null, file) : callback('Unable to find an Object whithin the file with the provided ID', null)
+            }   
+        })
+    } else {
+        callback('The fileName must be at least 6 words long anf the ID must be numeric');
+    }
 }
 
 module.exports = fetchOneByID;
