@@ -1,8 +1,9 @@
 const fs = require('fs');
-const fileName = 'items.csv';
+
 
 function storeItem(objectToStore, callback) {  
     //In this line the name of the object saved in the file is saved with the sanitized new name from objectToStore parameter 
+    const fileName = 'items.csv';
     objectToStore.name = objectToStore.name.trim();
     stringItem = JSON.stringify(objectToStore);
     fs.writeFile(fileName, stringItem, (error, response) => {
