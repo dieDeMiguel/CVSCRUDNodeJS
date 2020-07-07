@@ -1,8 +1,10 @@
 const fs = require('fs');
 const storeItem = require('../utils/storeitem');
 const readFile = require('../utils/readfile');
-const { validateDataName, validateDataFileName } = require('../utils/validation');
+const { validateDataName, validateID } = require('../utils/validation');
 const fetchOneByID = require('../utils/getoneitem');
+const deleteFile = require('../utils/deletefile');
+
 
 const  createItem = (item, callback) =>{
     if(validateDataName(item.name, item.id)) {
@@ -18,20 +20,20 @@ const  createItem = (item, callback) =>{
     }
 }
 
-const listItems = (fileName, callback) => {
-    if(validateDataFileName(fileName)) {
-        readFile(fileName, (error, response) => {
-            if(error) {
-                callback(error, null)
-            } else {
-                callback(null, response);
-            }
-        })
-    }
+const listItems = (callback) => {
+    const fileName = 'items.csv';
+    readFile(fileName, (error, response) => {
+        if(error) {
+            callback(error, null)
+        } else {
+            callback(null, response);
+        }
+    })
 }
 
-const getItem = (fileName, id, callback) => {
-    if(validateDataFileName(fileName, id)) {
+const getItem = (id, callback) => {
+    const fileName="items.csv"
+    if(validateID(id)) {
         fetchOneByID(fileName, id, (error, response) => {
             if(error) {
                 callback(error, null);
@@ -46,14 +48,13 @@ const getItem = (fileName, id, callback) => {
 
 
 //Update Item route.
-const updateItem = (itemToUpdate, fileName, callback) => {
-    if(validateDataName(itemToUpdate.name, itemToUpdate.id)) {
-        fetchOneByID(fileName, itemToUpdate.id, (error, response) => {
+const updateItem = (itemToUpdate, id, callback) => {
+    const fileName="items.csv"
+    if(validateID(id)) {
+        fetchOneByID(fileName, id, (error, response) => {
             if(error) {
                 callback(error, null);
             } else {
-                response.name = itemToUpdate.name;
-                response.fileName = itemToUpdate.fileName;
                 storeItem(response, (error, response )=> {
                     if(error) {
                         callback(error, null)
@@ -67,10 +68,22 @@ const updateItem = (itemToUpdate, fileName, callback) => {
         callback("The item must have a numeric ID and a name larger than 3 words", null)
     }
 }
+
+const removeFile = (callback) => {
+    const fileName = "items.csv";
+    deleteFile(fileName, (error, response) => {
+        if(error) {
+            callback(error, null)
+        } else {
+            callback(null, response);
+        }
+    })  
+}
  
 module.exports = {
     createItem: createItem,
     listItems: listItems,
     getItem: getItem,
-    updateItem: updateItem
+    updateItem: updateItem, 
+    removeFile: removeFile
 };
