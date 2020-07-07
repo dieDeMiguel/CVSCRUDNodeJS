@@ -12,17 +12,17 @@ function validateDataName(name, id) {
   } 
 }
 
-function validateDataFileName(fileName, id=1) {
-  fileName = fileName.trim();
+function validateID(id=1) {
   id = parseInt(id);
-  if(!Number.isInteger(id) || fileName.length <6) {
+  if(!Number.isInteger(id)) {
     return false
-  } else if(Number.isInteger(id) && fileName.length > 5)  {
+  } else {
     return true;
   } 
 }
+
   
 module.exports = {
   validateDataName: validateDataName,
-  validateDataFileName: validateDataFileName
+  validateID: validateID
 }
