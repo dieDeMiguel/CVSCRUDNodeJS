@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
-const {createItem, listItems, getItem, updateItem } = require('../controllers/items');
-const fileName = 'items.csv';
+const {createItem, listItems, getItem, updateItem, removeFile } = require('../controllers/items');
+
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -11,7 +11,7 @@ router.get('/', function(req, res, next) {
 
 // GET items 
 router.get('/items', function(req, res) {
-    listItems(fileName, (error, response) => {
+    listItems((error, response) => {
       error == null ? res.status(200).send(response) : res.status(400).send(error);
     })
 });
@@ -26,15 +26,21 @@ router.post('/items', function(req, res) {
 
 //Fetch an object by ID, the fileName is on req.body.filename and the ID is part of the URL
 router.get('/items/:id', function(req, res) {
-  getItem(fileName, req.params.id, (error, response) => {
+  getItem(req.params.id, (error, response) => {
     error == null ? res.status(200).send(response) : res.status(400).send(error);
   })
 })
 
 //Update an Item, req.body contains the changes in the item, the ID of the item is whithin the URL
-router.patch('/items', function(req, res) {
-  updateItem(req.body, fileName, (error, response) => {
+router.put('/items/:id', function(req, res) {
+  updateItem(req.body, req.params.id, (error, response) => {
     error == null ? res.status(202).send(response) : res.status(400).send(error);
+  })
+})
+
+router.delete('/items/', function(req, res) {
+  removeFile((error, response) => {
+    error == null ? res.status(200).send(response) : res.status(400).send(error);
   })
 })
 
