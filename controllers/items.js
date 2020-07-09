@@ -47,7 +47,7 @@ const getItem = (id, callback) => {
 }
 
 
-//Update Item route.
+//Update Item method.
 const updateItem = (changes, id, callback) => {
     if(validateID(id)) {
         fetchOneByIDAndDelete(fileName, id, (error, response) => {

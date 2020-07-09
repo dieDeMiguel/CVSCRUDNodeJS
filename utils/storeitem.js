@@ -2,23 +2,53 @@ const fs = require('fs');
 const readFile = require('./readfile');
 
 function storeItem(objectToStore, fileName, callback) {
-    readFile(fileName, (error, response) => {
-        if(error) {
-            callback(error, null)
-        } else {
-            itemsArray = response;
-            itemsArray.push(objectToStore);
-            itemsArray = JSON.stringify(itemsArray);
-            fs.writeFile(fileName, itemsArray, (error)=> {
+    fs.access(fileName, (err) => {
+        if (!err) {
+            readFile(fileName, (error, response) => {
                 if(error) {
-                    callback(error, null);
+                    callback(error, null)
                 } else {
-                    callback(null, 'The object with ID: #' + objectToStore.id + ' has been saved to memory');
+                    itemsArray = response;
+                    itemsArray.push(objectToStore);
+                    itemsArray = JSON.stringify(itemsArray);
+                    fs.writeFile(fileName, itemsArray, (error)=> {
+                        if(error) {
+                            callback(error, null);
+                        } else {
+                            callback(null, 'The object with ID: #' + objectToStore.id + ' has been saved to memory');
+                            return;
+                        }
+                    });
+                }
+            })         
+        } else {
+            const firstItem = [ {"id":0, "name": "#"} ];
+            fs.writeFile(fileName, JSON.stringify(firstItem), (error) => {
+                if(error) {
+                    callback(error);
                     return;
+                } else {
+                    readFile(fileName, (error, response) => {
+                        if(error) {
+                            callback(error, null)
+                        } else {
+                            itemsArray = response;
+                            itemsArray.push(objectToStore);
+                            itemsArray = JSON.stringify(itemsArray);
+                            fs.writeFile(fileName, itemsArray, (error)=> {
+                                if(error) {
+                                    callback(error, null);
+                                } else {
+                                    callback(null, 'The object with ID: #' + objectToStore.id + ' has been saved to memory');
+                                    return;
+                                }
+                            });
+                        }
+                    })  
                 }
             });
         }
-    })         
+    })
 } 
 
 function storeAfterDeleting(objectsToStore, fileName, callback) {
