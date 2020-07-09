@@ -4,9 +4,9 @@ function validateDataName(name, id) {
   id = parseInt(id);
   name = name.trim();
   if(id.length == 0 || name.length == 0) {
-    return false
+    return false;
   } else if(name.length < 4 && Number.isInteger(id)) {
-    return false
+    return false;
   } else if(id && name.length >3)  {
     return true;
   } 
@@ -14,11 +14,7 @@ function validateDataName(name, id) {
 
 function validateID(id=1) {
   id = parseInt(id);
-  if(!Number.isInteger(id)) {
-    return false
-  } else {
-    return true;
-  } 
+  return Number.isInteger(id);
 }
 
   

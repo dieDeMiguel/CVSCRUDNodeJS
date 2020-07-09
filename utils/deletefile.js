@@ -1,11 +1,14 @@
 const fs = require('fs');
+const {fetchOneByIDAndDelete}  = require('./getoneitem');
 
-function deleteFile(fileName, callback) {
-    fs.unlink(fileName, (err) => {
-        if (err) throw err;
-        callback(null, 'successfully deleted ' + fileName);
-    });
+function deleteItem(fileName, id, callback) {
+     fetchOneByIDAndDelete(fileName, id, (error, response) => {
+         if(error) {
+            callback(error, null);
+        } else {
+            callback(null, response);
+        }
+    })
 }
 
-
-  module.exports = deleteFile;
+  module.exports = deleteItem;

@@ -1,18 +1,36 @@
 const fs = require('fs');
+const readFile = require('./readfile');
 
-
-function storeItem(objectToStore, callback) {  
-    //In this line the name of the object saved in the file is saved with the sanitized new name from objectToStore parameter 
-    const fileName = 'items.csv';
-    objectToStore.name = objectToStore.name.trim();
-    stringItem = JSON.stringify(objectToStore);
-    fs.writeFile(fileName, stringItem, (error, response) => {
+function storeItem(objectToStore, fileName, callback) {
+    readFile(fileName, (error, response) => {
         if(error) {
-            callback('There was an error', null);
+            callback(error, null)
         } else {
-            callback(null, 'Object stored correctly. Object name: "' + objectToStore.name + '". Object ID: "' + objectToStore.id + '"');
+            itemsArray = response;
+            itemsArray.push(objectToStore);
+            itemsArray = JSON.stringify(itemsArray);
+            fs.writeFile(fileName, itemsArray, (error)=> {
+                if(error) {
+                    callback(error, null);
+                } else {
+                    callback(null, 'The object with ID: #' + objectToStore.id + ' has been saved to memory');
+                    return;
+                }
+            });
         }
+    })         
+} 
+
+function storeAfterDeleting(objectsToStore, fileName, callback) {
+    fs.writeFile(fileName, objectsToStore, (error) => {
+        if(error) {
+            callback('Something went wrong while storing the changes in the file');
+        } callback(null, 'The file was updated');
     })
 }
 
-module.exports = storeItem;
+
+module.exports = {
+    storeItem: storeItem,
+    storeAfterDeleting: storeAfterDeleting
+};

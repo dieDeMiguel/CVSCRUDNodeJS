@@ -1,30 +1,31 @@
 const fs = require('fs');
-const storeItem = require('../utils/storeitem');
+const {storeItem} = require('../utils/storeitem');
 const readFile = require('../utils/readfile');
 const { validateDataName, validateID } = require('../utils/validation');
-const fetchOneByID = require('../utils/getoneitem');
-const deleteFile = require('../utils/deletefile');
+const deleteItem = require('../utils/deletefile');
+const { fetchOneByID, fetchOneByIDAndDelete } = require('../utils/getoneitem');
+const fileName="items.csv"
 
 
 const  createItem = (item, callback) =>{
     if(validateDataName(item.name, item.id)) {
-       storeItem(item, (error, response) => {
+       item.name = item.name.trim(); 
+       storeItem(item, fileName, (error, response) => {
           if(error) {
               callback(error, null);
           } else {
               callback(null, response);
           }
-       });
+       })
     } else {
-        callback("The item must have a numeric ID and a name larger than 3 words", null)
+        callback("The item must have a numeric ID and a name larger than 3 words", null);
     }
 }
 
 const listItems = (callback) => {
-    const fileName = 'items.csv';
     readFile(fileName, (error, response) => {
         if(error) {
-            callback(error, null)
+            callback(error, null);
         } else {
             callback(null, response);
         }
@@ -32,8 +33,7 @@ const listItems = (callback) => {
 }
 
 const getItem = (id, callback) => {
-    const fileName="items.csv"
-    if(validateID(id)) {
+    if(validateID(id)) { 
         fetchOneByID(fileName, id, (error, response) => {
             if(error) {
                 callback(error, null);
@@ -42,38 +42,41 @@ const getItem = (id, callback) => {
             }
         })
     } else {
-        callback("The item must have a numeric ID and a file name larger to 5 words", null)
+        callback("The item must have a numeric ID", null);
     }
 }
 
 
 //Update Item route.
-const updateItem = (itemToUpdate, id, callback) => {
-    const fileName="items.csv"
+const updateItem = (changes, id, callback) => {
     if(validateID(id)) {
-        fetchOneByID(fileName, id, (error, response) => {
+        fetchOneByIDAndDelete(fileName, id, (error, response) => {
             if(error) {
                 callback(error, null);
             } else {
-                storeItem(response, (error, response )=> {
+                newItem = {
+                    id: id,
+                    name: changes.name.trim()
+                }
+                storeItem(newItem, fileName, (error, response)=> {
                     if(error) {
-                        callback(error, null)
+                        callback(error, null);
                     } else {
-                        callback(null, response);
+                        callback('The file was updated coorectly, the new name is: ' + newItem.name);
+                        return;
                     }
                 })
             }
-        })
+        })  
     } else {
-        callback("The item must have a numeric ID and a name larger than 3 words", null)
+        callback("The item must have a numeric ID and a name larger than 3 words", null);
     }
 }
 
-const removeFile = (callback) => {
-    const fileName = "items.csv";
-    deleteFile(fileName, (error, response) => {
+const removeFile = (id, callback) => {
+    deleteItem(fileName, id,  (error, response) => {
         if(error) {
-            callback(error, null)
+            callback(error, null);
         } else {
             callback(null, response);
         }
