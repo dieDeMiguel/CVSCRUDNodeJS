@@ -7,7 +7,7 @@ function getItemById(fileName, id, callback) {
     if(validateID(id)) {
         readFile(fileName, (error, response) => {
             if(error) {
-                callback(error, null);
+                callback('There was a problem while reading the file', null);
             } else {
                 for(item of response) {
                     item.id = item.id.toString();
@@ -16,6 +16,7 @@ function getItemById(fileName, id, callback) {
                     } else {
                         callback('Unable to find an item with the provided ID', null);
                     }
+                    return
                 }
             }
         });
