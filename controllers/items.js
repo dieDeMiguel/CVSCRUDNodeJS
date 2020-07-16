@@ -1,14 +1,15 @@
 const fs = require('fs');
 const {storeItem} = require('../utils/storeitem');
 const readFile = require('../utils/readfile');
-const { validateDataName, validateID } = require('../utils/validation');
-const deleteItem = require('../utils/deletefile');
-const { fetchOneByID, fetchOneByIDAndDelete } = require('../utils/getoneitem');
-const fileName="items.csv"
+const { validateIDName } = require('../utils/validateIDName');
+const { validateID } = require('../utils/validateID');
+const deleteItem = require('../utils/deleteItem');
+const { getItemById } = require('../utils/getItemById');
+const fileName="items.json"
 
 
 const  createItem = (item, callback) =>{
-    if(validateDataName(item.name, item.id)) {
+    if(validateIDName(item.name, item.id)) {
        item.name = item.name.trim(); 
        storeItem(item, fileName, (error, response) => {
           if(error) {
@@ -34,7 +35,7 @@ const listItems = (callback) => {
 
 const getItem = (id, callback) => {
     if(validateID(id)) { 
-        fetchOneByID(fileName, id, (error, response) => {
+        getItemById(fileName, id, (error, response) => {
             if(error) {
                 callback(error, null);
             } else {
@@ -50,7 +51,7 @@ const getItem = (id, callback) => {
 //Update Item method.
 const updateItem = (changes, id, callback) => {
     if(validateID(id)) {
-        fetchOneByIDAndDelete(fileName, id, (error, response) => {
+        getItemById(fileName, id, (error, response) => {
             if(error) {
                 callback(error, null);
             } else {
@@ -73,7 +74,7 @@ const updateItem = (changes, id, callback) => {
     }
 }
 
-const removeFile = (id, callback) => {
+const removeItem = (id, callback) => {
     deleteItem(fileName, id,  (error, response) => {
         if(error) {
             callback(error, null);
@@ -88,5 +89,5 @@ module.exports = {
     listItems: listItems,
     getItem: getItem,
     updateItem: updateItem, 
-    removeFile: removeFile
+    removeItem: removeItem
 };

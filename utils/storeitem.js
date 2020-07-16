@@ -1,66 +1,49 @@
 const fs = require('fs');
 const readFile = require('./readfile');
+const stringifyAndSave = require('./stringify&store');
+const { writeFile } = require('./writeFile');
+const getFileExtension = require('./getFileExtension');
 
-function storeItem(objectToStore, fileName, callback) {
+function storeItem(item, fileName, callback) {
     fs.access(fileName, (err) => {
+        //The file exists if there is no error
         if (!err) {
             readFile(fileName, (error, response) => {
                 if(error) {
                     callback(error, null)
                 } else {
                     itemsArray = response;
-                    itemsArray.push(objectToStore);
-                    itemsArray = JSON.stringify(itemsArray);
-                    fs.writeFile(fileName, itemsArray, (error)=> {
-                        if(error) {
-                            callback(error, null);
-                        } else {
-                            callback(null, 'The object with ID: #' + objectToStore.id + ' has been saved to memory');
-                            return;
-                        }
-                    });
-                }
-            })         
-        } else {
-            const firstItem = [ {"id":0, "name": "#"} ];
-            fs.writeFile(fileName, JSON.stringify(firstItem), (error) => {
-                if(error) {
-                    callback(error);
-                    return;
-                } else {
-                    readFile(fileName, (error, response) => {
+                    itemsArray.push(item);
+                    itemsArray = JSON.stringify(itemsArray, null, 2);
+                    writeFile(fileName, itemsArray, (error, response) => {
                         if(error) {
                             callback(error, null)
                         } else {
-                            itemsArray = response;
-                            itemsArray.push(objectToStore);
-                            itemsArray = JSON.stringify(itemsArray);
-                            fs.writeFile(fileName, itemsArray, (error)=> {
-                                if(error) {
-                                    callback(error, null);
-                                } else {
-                                    callback(null, 'The object with ID: #' + objectToStore.id + ' has been saved to memory');
-                                    return;
-                                }
-                            });
+                            callback(null, response);
                         }
-                    })  
+                    })
                 }
-            });
+            })         
+        } else { 
+            //The file doesn't exist
+            if(fileName.length < 7 || getFileExtension(fileName) != 'json') {
+                callback('The name of the file must have at least 4 words and the file extension must be ".json".')
+            } else {
+                const emptyArray = [];
+                emptyArray.push(item);
+                writeFile(fileName, JSON.stringify(emptyArray), (error, response) => {
+                    if(error) {
+                        callback(error, null);
+                    } else {
+                        callback(null, response);  
+                    }
+                });
+            }
+            
         }
     })
 } 
 
-function storeAfterDeleting(objectsToStore, fileName, callback) {
-    fs.writeFile(fileName, objectsToStore, (error) => {
-        if(error) {
-            callback('Something went wrong while storing the changes in the file');
-        } callback(null, 'The file was updated');
-    })
-}
-
-
 module.exports = {
-    storeItem: storeItem,
-    storeAfterDeleting: storeAfterDeleting
+    storeItem  
 };

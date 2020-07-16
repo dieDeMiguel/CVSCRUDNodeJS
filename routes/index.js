@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-//const {createItem, listItems, getItem, updateItem, removeFile } = require('../controllers/items');
+//const {createItem, listItems, getItem, updateItem, removeItem } = require('../controllers/items');
 const itemController = require('../controllers/items');
 
 
@@ -41,7 +41,7 @@ router.put('/items/:id', function(req, res) {
 
 //Delete an Item in the file route
 router.delete('/items/:id', function(req, res) {
-  itemController.removeFile(req.params.id, (error, response) => {
+  itemController.removeItem(req.params.id, (error, response) => {
     error == null ? res.status(200).send(response) : res.status(400).send(error);
   })
 })
