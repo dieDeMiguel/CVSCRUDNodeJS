@@ -19,7 +19,7 @@ const  createItem = (item, callback) =>{
           }
        })
     } else {
-        callback("The item must have a numeric ID and a name larger than 3 words", null);
+        callback("The item must have a positive numeric ID and a name larger than 3 words", null);
     }
 }
 

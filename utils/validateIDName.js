@@ -3,7 +3,7 @@ const fs = require('fs');
 function validateIDName(name, id) {
   id = parseInt(id);
   name = name.trim();
-  if(id.length === 0 || name.length === 0) {
+  if(id < 1 || name.length < 4) {
     return false;
   } else if(name.length < 4 && Number.isInteger(id)) {
     return false;
