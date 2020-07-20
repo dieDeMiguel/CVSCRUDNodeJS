@@ -1,3 +1,3 @@
 function splicaAndStringify(array) {
-    array.splice()
+    return array.splice()
 }
