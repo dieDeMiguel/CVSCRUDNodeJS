@@ -1,6 +1,7 @@
 const fs = require('fs');
 
 function readFile(fileName, callback) {
+    console.log('fileName', fileName)
     fs.readFile(fileName, (error, data) => {
         if(error) {
             callback('The file couldn\'t be read', null);

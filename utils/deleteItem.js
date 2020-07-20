@@ -2,6 +2,7 @@ const fs = require('fs');
 const {getItemById}  = require('./getItemById');
 const readFile = require('./readfile');
 const checkIDAndFindIndex = require('./checkIDAndFindIndex');
+const { spliceAndStringify } = require('./spliceAndStringify');
 const { writeFile } = require('./writeFile');
 
 function deleteItem(fileName, id, callback) {
@@ -16,6 +17,7 @@ function deleteItem(fileName, id, callback) {
                     for(item of response) {
                         const index = checkIDAndFindIndex(item, id, response);
                         if(index != -1) {
+                            response = spliceAndStringify(index, response);
                             writeFile(fileName, response, (error, response) => {
                                 if(error) {
                                     callback(error, null)

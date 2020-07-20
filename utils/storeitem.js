@@ -1,9 +1,8 @@
 const fs = require('fs');
 const readFile = require('./readfile');
-const stringifyAndSave = require('./stringify&store');
 const { writeFile } = require('./writeFile');
 const getFileExtension = require('./getFileExtension');
-const pushAndStringify = require('./pushAndStringify');
+const {pushAndStringify} = require('./pushAndStringify');
 
 function storeItem(item, fileName, callback) {
     fs.access(fileName, (err) => {
@@ -18,7 +17,7 @@ function storeItem(item, fileName, callback) {
                         if(error) {
                             callback(error, null)
                         } else {
-                            callback(null, response);
+                            callback(null, 'The file has been updated, the new name is ' + item.name);
                         }
                     })
                 }
