@@ -85,9 +85,9 @@ const removeItem = (id, callback) => {
 }
  
 module.exports = {
-    createItem: createItem,
-    listItems: listItems,
-    getItem: getItem,
-    updateItem: updateItem, 
-    removeItem: removeItem
+    createItem,
+    listItems,
+    getItem,
+    updateItem, 
+    removeItem
 };

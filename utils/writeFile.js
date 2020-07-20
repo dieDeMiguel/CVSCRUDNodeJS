@@ -5,7 +5,7 @@ function writeFile(fileName, input, callback) {
         if(error) {
             callback('Something went wrong while saving the file', null);
         } else {
-            callback('The input was saved into memory');
+            callback(null, 'file has been updated with the indicated changes');
         }
     });
 }

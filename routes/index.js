@@ -1,6 +1,5 @@
 var express = require('express');
 var router = express.Router();
-//const {createItem, listItems, getItem, updateItem, removeItem } = require('../controllers/items');
 const itemController = require('../controllers/items');
 
 
