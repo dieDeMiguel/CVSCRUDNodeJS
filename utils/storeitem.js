@@ -24,6 +24,7 @@ function storeItem(item, fileName, callback) {
             })         
         } else { 
             //The file doesn't exist
+            console.log('fileName.length', fileName)
             if(fileName.length < 7 || getFileExtension(fileName) != 'json') {
                 callback('The name of the file must have at least 4 words and the file extension must be ".json".')
             } else {
