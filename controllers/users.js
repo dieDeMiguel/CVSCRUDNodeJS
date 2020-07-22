@@ -1,7 +1,8 @@
 const fs = require('fs');
-const {checkEmailIsUnique} = require('../utils/checkEmailIsUnique');
+const { checkEmailIsUnique } = require('../utils/checkEmailIsUnique');
 const { storeItem } = require('../utils/storeitem');
 const { makeUserObject } = require('../utils/makeUserObject');
+const { getItemByEmail } = require('../utils/getItemByEmail');
 const fileName = 'users.json';
 
 const createUser = (name, lastName, email, password, callback) => {
@@ -22,6 +23,17 @@ const createUser = (name, lastName, email, password, callback) => {
     });
 }
 
+const getUser = (email, callback) => {
+    getItemByEmail(fileName, email, (error, response) => {
+        if(error) {
+            callback(error, null);
+        } else {
+            callback(null, response);
+        }
+    })
+}
+
 module.exports = {
-    createUser
+    createUser,
+    getUser
 }

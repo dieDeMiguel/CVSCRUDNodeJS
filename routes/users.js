@@ -9,5 +9,12 @@ router.post('/register', function(req, res) {
   })
 });
 
+router.get('/', function(req, res) {
+  usersController.getUser(req.body.email, (error, response) =>{
+    error == null ? res.status(200).send(response) : res.status(400).send(error);
+  })
+});
+
+
 
 module.exports = router;
