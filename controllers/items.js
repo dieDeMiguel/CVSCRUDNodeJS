@@ -1,9 +1,9 @@
 const fs = require('fs');
 const { storeItem } = require('../utils/storeitem');
-const readFile = require('../utils/readfile');
+const { readFile } = require('../utils/readfile');
 const { validateIDName } = require('../utils/validateIDName');
 const { validateID } = require('../utils/validateID');
-const deleteItem = require('../utils/deleteItem');
+const { deleteItem } = require('../utils/deleteItem');
 const { getItemById } = require('../utils/getItemById');
 const { createNewItem } = require('../utils/createNewItem');
 const fileName = "items.json";
