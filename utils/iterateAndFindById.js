@@ -1,4 +1,4 @@
-const readFile = require('./readfile');
+const { readFile } = require('./readfile');
 
 function iterateAndFindById(id, fileName, callback) {
     readFile(fileName, (error, response) => {

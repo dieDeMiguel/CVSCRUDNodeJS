@@ -1,4 +1,4 @@
-const readFile = require('./readfile');
+const { readFile } = require('./readfile');
 
 const {pushAndStringify} = require('./pushAndStringify');
 

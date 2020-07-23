@@ -1,7 +1,7 @@
 const fs = require('fs');
 const {getItemById}  = require('./getItemById');
-const readFile = require('./readfile');
-const checkIDAndFindIndex = require('./checkIDAndFindIndex');
+const { readFile } = require('./readfile');
+const { checkIDAndFindIndex } = require('./checkIDAndFindIndex');
 const { spliceAndStringify } = require('./spliceAndStringify');
 const { writeFile } = require('./writeFile');
 
@@ -35,4 +35,6 @@ function deleteItem(fileName, id, callback) {
     })
 }
 
-  module.exports = deleteItem;
+  module.exports = {
+      deleteItem
+    };

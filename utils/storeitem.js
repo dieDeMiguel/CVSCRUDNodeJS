@@ -1,8 +1,8 @@
 const fs = require('fs');
-const readFile = require('./readfile');
+const { readFile } = require('./readfile');
 const { writeFile } = require('./writeFile');
-const getFileExtension = require('./getFileExtension');
-const {pushAndStringify} = require('./pushAndStringify');
+const { getFileExtension } = require('./getFileExtension');
+const { pushAndStringify } = require('./pushAndStringify');
 
 function storeItem(item, fileName, callback) {
     fs.access(fileName, (err) => {
@@ -24,7 +24,6 @@ function storeItem(item, fileName, callback) {
             })         
         } else { 
             //The file doesn't exist
-            console.log('fileName.length', fileName)
             if(fileName.length < 7 || getFileExtension(fileName) != 'json') {
                 callback('The name of the file must have at least 4 words and the file extension must be ".json".')
             } else {
