@@ -12,6 +12,4 @@ function getItemByEmail(fileName, email, callback) {
     })
 }
 
-module.exports = {
-    getItemByEmail
-};
+module.exports = getItemByEmail;

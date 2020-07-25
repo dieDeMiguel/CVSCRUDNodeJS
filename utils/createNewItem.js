@@ -7,6 +7,4 @@ function createNewItem(name, id) {
     return newItem;
 }
 
-module.exports = {
-    createNewItem
-};
+module.exports = createNewItem;

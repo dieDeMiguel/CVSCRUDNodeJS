@@ -5,6 +5,4 @@ function checkIDAndFindIndex(item, id, array) {
     return index;
 }
 
-module.exports = {
-    checkIDAndFindIndex
-};
+module.exports = checkIDAndFindIndex;

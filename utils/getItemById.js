@@ -12,6 +12,4 @@ function getItemById(fileName, id, callback) {
     })
 }
 
-module.exports = {
-    getItemById
-};
+module.exports = getItemById;

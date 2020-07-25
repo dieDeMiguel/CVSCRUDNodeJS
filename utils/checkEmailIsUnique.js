@@ -1,4 +1,4 @@
-const { readFile } = require('./readfile');
+const readFile = require('./readfile');
 const items = require('../controllers/items');
 const fs = require('fs');
 
@@ -17,6 +17,4 @@ function checkEmailIsUnique(email, fileName, callback) {
     })
 }
 
-module.exports = {
-    checkEmailIsUnique
-}
+module.exports = checkEmailIsUnique;
