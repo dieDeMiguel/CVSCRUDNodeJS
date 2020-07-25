@@ -1,11 +1,11 @@
 const fs = require('fs');
-const { storeItem } = require('../utils/storeitem');
-const { readFile } = require('../utils/readfile');
-const { validateIDName } = require('../utils/validateIDName');
-const { validateID } = require('../utils/validateID');
-const { deleteItem } = require('../utils/deleteItem');
-const { getItemById } = require('../utils/getItemById');
-const { createNewItem } = require('../utils/createNewItem');
+const storeItem = require('../utils/storeitem');
+const readFile = require('../utils/readfile');
+const validateIDName = require('../utils/validateIDName');
+const validateID = require('../utils/validateID');
+const deleteItem = require('../utils/deleteItem');
+const getItemById = require('../utils/getItemById');
+const createNewItem = require('../utils/createNewItem');
 const fileName = "items.json";
 
 
@@ -56,7 +56,7 @@ const updateItem = (changes, id, callback) => {
             if(error) {
                 callback(error, null);
             } else {
-                newItem = createNewItem(changes.name, id);
+                const newItem = createNewItem(changes.name, id);
                 storeItem(newItem, fileName, (error, response) => {
                     if(error) {
                         callback(error, null);
