@@ -1,5 +1,5 @@
 const fs = require('fs');
-const { writeFile } = require('./writeFile');
+const writeFile = require('./writeFile');
 
 function stringifyAndSave(fileName, array, callback) {
     array = JSON.stringify(array, null, 2);

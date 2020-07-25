@@ -11,6 +11,4 @@ function readFile(fileName, callback) {
     })
 }
 
-module.exports = {
-    readFile
-};
+module.exports = readFile;

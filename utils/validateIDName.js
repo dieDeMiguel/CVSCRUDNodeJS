@@ -12,6 +12,4 @@ function validateIDName(name, id) {
   } 
 }
 
-module.exports = {
-  validateIDName
-}
+module.exports = validateIDName;

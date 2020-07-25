@@ -3,6 +3,4 @@ function pushAndStringify(item, array=[]) {
     return JSON.stringify(array, null, 2);
 }
 
-module.exports = {
-    pushAndStringify
-};
+module.exports = pushAndStringify;

@@ -1,6 +1,6 @@
 const { readFile } = require('./readfile');
 
-const {pushAndStringify} = require('./pushAndStringify');
+const pushAndStringify = require('./pushAndStringify');
 
 function updateNameAndSave(item, fileName, id, callback) {
     readFile(fileName, (error, response) => {

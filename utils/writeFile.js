@@ -10,6 +10,4 @@ function writeFile(fileName, input, callback) {
     });
 }
 
-module.exports = {
-    writeFile
-};
+module.exports = writeFile;

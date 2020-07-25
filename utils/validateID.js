@@ -5,6 +5,4 @@ function validateID(id=1) {
   return Number.isInteger(id);
 }
 
-module.exports = {
-    validateID
-}
+module.exports = validateID;

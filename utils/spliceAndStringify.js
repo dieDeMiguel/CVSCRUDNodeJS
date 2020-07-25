@@ -4,6 +4,4 @@ function spliceAndStringify(index, array) {
     return JSON.stringify(array);
 }
 
-module.exports = {
-    spliceAndStringify
-}
+module.exports = spliceAndStringify;

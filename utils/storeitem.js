@@ -1,8 +1,8 @@
 const fs = require('fs');
-const { readFile } = require('./readfile');
-const { writeFile } = require('./writeFile');
-const { getFileExtension } = require('./getFileExtension');
-const { pushAndStringify } = require('./pushAndStringify');
+const readFile = require('./readfile');
+const writeFile = require('./writeFile');
+const getFileExtension = require('./getFileExtension');
+const pushAndStringify = require('./pushAndStringify');
 
 function storeItem(item, fileName, callback) {
     fs.access(fileName, (err) => {
@@ -40,6 +40,4 @@ function storeItem(item, fileName, callback) {
     })
 } 
 
-module.exports = {
-    storeItem  
-};
+module.exports = storeItem;
