@@ -1,4 +1,4 @@
-const { readFile } = require('./readfile');
+const readFile = require('./readfile');
 
 function iterateAndFindByEmail(email, fileName, callback) {
     readFile(fileName, (error, response) => {
@@ -10,7 +10,9 @@ function iterateAndFindByEmail(email, fileName, callback) {
                     callback(null, item);
                     return;
                 } 
-            } callback('Unable to find an Item with the provided email');
+            } callback({
+                message: 'User not found'
+            }, null);
         }
     })   
 }
