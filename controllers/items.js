@@ -3,7 +3,7 @@ const storeItem = require('../utils/storeitem');
 const readFile = require('../utils/readfile');
 const validateIDName = require('../utils/validateIDName');
 const validateID = require('../utils/validateID');
-const deleteItem = require('../utils/deleteItem');
+const deleteObject = require('../utils/deleteObject');
 const getItemById = require('../utils/getItemById');
 const createNewItem = require('../utils/createNewItem');
 const fileName = "items.json";
@@ -52,7 +52,7 @@ const getItem = (id, callback) => {
 //Update Item method.
 const updateItem = (changes, id, callback) => {
     if(validateID(id)) {
-        deleteItem(fileName, id, (error) => {
+        deleteObject(fileName, id, (error) => {
             if(error) {
                 callback(error, null);
             } else {
@@ -72,7 +72,7 @@ const updateItem = (changes, id, callback) => {
 }
 
 const removeItem = (id, callback) => {
-    deleteItem(fileName, id,  (error, response) => {
+    deleteObject(fileName, id,  (error, response) => {
         if(error) {
             callback(error, null);
         } else {
