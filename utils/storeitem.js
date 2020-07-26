@@ -13,7 +13,7 @@ function storeItem(item, fileName, callback) {
                     callback(error, null)
                 } else {
                     const itemsArray = pushAndStringify(item, response);
-                    writeFile(fileName, itemsArray, (error, response) => {
+                    writeFile(fileName, itemsArray, (error) => {
                         if(error) {
                             callback(error, null)
                         } else {
