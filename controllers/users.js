@@ -1,6 +1,10 @@
 const checkEmailIsUnique = require('../utils/checkEmailIsUnique');
 const storeItem = require('../utils/storeitem');
 const getItemByEmail = require('../utils/getItemByEmail');
+const emailDateToken = require('../utils/emailDateToken');
+const updateUser = require('../utils/updateUser');
+const checkToken = require('../utils/checkToken');
+const { response } = require('express');
 const fileName = 'users.json';
 
 const createUser = (user, callback) => {
@@ -32,8 +36,14 @@ const login = (user, callback) => {
             callback(error, null);
         } else {
             if(response.password === user.password) {
-                callback(null, {
-                    message: "User succesfully logged"
+                const token = emailDateToken(response.email);
+                response.token = token
+                updateUser(response, fileName, (error, response) => {
+                    if(error) {
+                        callback(error, null);
+                    } else {
+                        callback(null, response)
+                    }
                 })
             } else {
                 callback({
@@ -44,9 +54,23 @@ const login = (user, callback) => {
     })
 }
 
+const getProfile = (email, token, callback) => {
+    if(!token){
+        callback('The token must be declared', null);
+    }
+    checkToken(email, token, fileName, (error, response) => {
+        if(error) {
+            callback(error, null);
+        } else {
+            callback(null, response);
+        }
+    })
+}
+
 
  
 module.exports = {
     createUser,
-    login
+    login,
+    getProfile
 }
