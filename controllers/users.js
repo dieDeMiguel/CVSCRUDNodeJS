@@ -1,4 +1,3 @@
-const fs = require('fs');
 const checkEmailIsUnique = require('../utils/checkEmailIsUnique');
 const storeItem = require('../utils/storeitem');
 const getItemByEmail = require('../utils/getItemByEmail');
