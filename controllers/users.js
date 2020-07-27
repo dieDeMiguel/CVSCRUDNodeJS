@@ -1,6 +1,6 @@
-const checkEmailIsUnique = require('../utils/checkEmailIsUnique');
+const checkIfUnique = require('../utils/checkIfUnique');
 const storeItem = require('../utils/storeitem');
-const getItemByEmail = require('../utils/getItemByEmail');
+const find = require('../utils/find');
 const emailDateToken = require('../utils/emailDateToken');
 const updateUser = require('../utils/updateUser');
 const checkToken = require('../utils/checkToken');
@@ -11,11 +11,11 @@ const createUser = (user, callback) => {
     if(!user.email) {
         return callback('The user must have en email', null)
     }
-    checkEmailIsUnique(user.email, fileName, (error) => {
+    checkIfUnique(user.email, fileName, (error) => {
         if(error) {
             return callback(error, null);
         } 
-        storeItem(user,fileName, (error, response) => {
+        storeItem(user,fileName, (error) => {
             if(error) {
                 callback(error, null);
             } else {
@@ -31,7 +31,7 @@ const createUser = (user, callback) => {
 }
 
 const login = (user, callback) => {
-    getItemByEmail(fileName, user.email, (error, response) => {
+    find(user.email, fileName, (error, response) => {
         if(error) {
             callback(error, null);
         } else {
