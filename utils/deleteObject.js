@@ -10,7 +10,6 @@ function deleteObject(fileName, id, callback) {
             callback(error, null);
         } else {
             if(id == parseInt(id, 10)) {
-                console.log(id)
                 const item = response.find((item) => item.id == id);
                 if(item == undefined) {
                     callback('Unable ot find an item with the provided id', null)
@@ -36,7 +35,6 @@ function deleteObject(fileName, id, callback) {
                         } else {
                             const index = findIndex(item, id, response);
                             response = spliceAndStringify(index, response);
-                            console.log('response dentro deleteObject en la parte de email', response)
                             writeFile(fileName, response, (error) => {
                                 if(error) {
                                     callback(error, null);

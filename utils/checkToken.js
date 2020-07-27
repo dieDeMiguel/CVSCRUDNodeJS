@@ -1,7 +1,7 @@
-const getItemByEmail = require('./getItemByEmail');
+const find = require('./find');
 
 function checkToken(email, token, fileName, callback) {
-    getItemByEmail(fileName, email, (error, response) => {
+    find(email, fileName, (error, response) => {
         if(error) {
             callback(error, null);
         } else {
