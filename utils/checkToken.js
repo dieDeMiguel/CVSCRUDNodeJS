@@ -5,6 +5,7 @@ function checkToken(email, token, fileName, callback) {
         if(error) {
             callback(error, null);
         } else {
+            token = token.split(' ')[1];
             if(response.token == token) {
                 callback(null, {
                     email: response.email,
