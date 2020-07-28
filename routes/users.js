@@ -16,8 +16,8 @@ router.post('/login', function(req, res){
   })
 })
 
-router.get('/profile/:email', function(req, res) {
-  usersController.getProfile(req.params.email, req.get('token'),   (error, response) => {
+router.get('/profile', function(req, res) {
+  usersController.getProfile(req.get('token'), (error, response) => {
     error == null ? res.status(200).send(response) : res.status(400).send(error);
   })
 })

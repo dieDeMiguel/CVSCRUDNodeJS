@@ -3,7 +3,7 @@ const storeItem = require('../utils/storeitem');
 const find = require('../utils/find');
 const emailDateToken = require('../utils/emailDateToken');
 const updateUser = require('../utils/updateUser');
-const checkToken = require('../utils/checkToken');
+const findUserByToken = require('../utils/findUserByToken');
 const { response } = require('express');
 const fileName = 'users.json';
 
@@ -54,11 +54,11 @@ const login = (user, callback) => {
     })
 }
 
-const getProfile = (email, token, callback) => {
+const getProfile = (token, callback) => {
     if(!token){
         callback('The token must be declared', null);
     }
-    checkToken(email, token, fileName, (error, response) => {
+    findUserByToken(token, fileName, (error, response) => {
         if(error) {
             callback(error, null);
         } else {
