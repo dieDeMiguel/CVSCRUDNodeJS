@@ -1,7 +1,7 @@
 const checkIfUnique = require('../utils/checkIfUnique');
 const storeItem = require('../utils/storeitem');
 const find = require('../utils/find');
-const emailDateToken = require('../utils/emailDateToken');
+const generateToken = require('../utils/generateToken');
 const updateUser = require('../utils/updateUser');
 const findUserByToken = require('../utils/findUserByToken');
 const { response } = require('express');
@@ -11,7 +11,10 @@ const createUser = (user, callback) => {
     if(!user.email) {
         return callback('The user must have en email', null)
     }
-    checkIfUnique(user.email, fileName, (error) => {
+    if(!user.userID) {
+        return callback('The user must have a "userID"');
+    }
+    checkIfUnique(user.userID, fileName, (error) => {
         if(error) {
             return callback(error, null);
         } 
@@ -20,6 +23,7 @@ const createUser = (user, callback) => {
                 callback(error, null);
             } else {
                 callback(null, {
+                    userID: user.userID,
                     name: user.name,
                     lastName: user.lastName,
                     email: user.email
@@ -36,7 +40,7 @@ const login = (user, callback) => {
             callback(error, null);
         } else {
             if(response.password === user.password) {
-                const token = emailDateToken(response.email);
+                const token = generateToken(response.userID);
                 response.token = token
                 updateUser(response, fileName, (error, response) => {
                     if(error) {
