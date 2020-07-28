@@ -1,20 +1,25 @@
 const find = require('./find');
+const getUserIDFromToken = require('./getUserIDFromToken');
+const checkIfTokenExpired = require('../utils/checkIfTokenExpired');
 
 function findUserByToken(token, fileName, callback) {
-    token = token.split(' ')[1];
-    token = Buffer.from(token, 'base64').toString('ascii');
-    email = token.split('.')[1] + "." + token.split('.')[2];
-    find(email, fileName, (error, response) => {
-        if(error) {
-            callback(error, null);
-        } else {
-            callback(null, {
-                email: response.email,
-                name: response.name,
-                lastName: response.lastName,
-            });
-        }
-    });
+    if(checkIfTokenExpired(token)) {
+        userID = getUserIDFromToken(token);
+        find(userID, fileName, (error, response) => {
+            if(error) {
+                callback(error, null);
+            } else {
+                callback(null, {
+                    userID: response.userID,
+                    name: response.name,
+                    lastName: response.lastName,
+                    email: response.email
+                });
+            }
+        });  
+    } else {
+        callback('The token has expired after one hour', null);
+    }
 }
 
 module.exports = findUserByToken;
