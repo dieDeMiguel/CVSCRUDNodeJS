@@ -1,7 +1,9 @@
-function generateToken(userID) {
+const readFile = require('./readfile');
+
+function generateToken(id) {
     const date = Date.now().toString();
-    const dateUserID = date + "." + userID;
-    let buff = new Buffer(dateUserID);
+    const dateID = date + "." + id;
+    let buff = new Buffer(dateID);
     let base64data = buff.toString('base64');
     return base64data;
 }

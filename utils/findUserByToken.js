@@ -4,13 +4,13 @@ const checkIfTokenExpired = require('../utils/checkIfTokenExpired');
 
 function findUserByToken(token, fileName, callback) {
     if(checkIfTokenExpired(token)) {
-        userID = getUserIDFromToken(token);
-        find(userID, fileName, (error, response) => {
+        id = getUserIDFromToken(token);
+        find(id, fileName, (error, response) => {
             if(error) {
                 callback(error, null);
             } else {
                 callback(null, {
-                    userID: response.userID,
+                    id: response.id,
                     name: response.name,
                     lastName: response.lastName,
                     email: response.email

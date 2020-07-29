@@ -2,7 +2,7 @@ const deleteObject = require('./deleteObject');
 const storeItem = require('./storeitem');
 
 function updateUser(user, fileName, callback) {
-    deleteObject(fileName, user.email, (error) => {
+    deleteObject(fileName, user.id, (error, response) => {
         if(error) {
             callback(error, null);
         } else {
