@@ -6,7 +6,7 @@ function find(id, fileName, callback) {
             callback(error, null); 
         } else {
             id == parseInt(id, 10);
-            item = response.find((item) => item.userID == id);
+            item = response.find((item) => item.id == id);
             if(item === undefined) {
                 callback('Unable to find an object with the provided ID', null);
             } else {
