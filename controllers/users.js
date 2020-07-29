@@ -1,20 +1,15 @@
 const checkIfUnique = require('../utils/checkIfUnique');
 const storeItem = require('../utils/storeitem');
 const find = require('../utils/find');
+const fileName = 'users.json';
 const generateToken = require('../utils/generateToken');
 const updateUser = require('../utils/updateUser');
-const findUserByToken = require('../utils/findUserByToken');
-const { response } = require('express');
-const fileName = 'users.json';
 
 const createUser = (user, callback) => {
     if(!user.email) {
         return callback('The user must have en email', null)
     }
-    if(!user.userID) {
-        return callback('The user must have a "userID"');
-    }
-    checkIfUnique(user.userID, fileName, (error) => {
+    checkIfUnique(user.email, fileName, (error) => {
         if(error) {
             return callback(error, null);
         } 
@@ -23,7 +18,7 @@ const createUser = (user, callback) => {
                 callback(error, null);
             } else {
                 callback(null, {
-                    userID: user.userID,
+                    id: user.id,
                     name: user.name,
                     lastName: user.lastName,
                     email: user.email
@@ -35,46 +30,31 @@ const createUser = (user, callback) => {
 }
 
 const login = (user, callback) => {
-    find(user.email, fileName, (error, response) => {
+    find(user.id.toString(), fileName, (error, response) => {
         if(error) {
             callback(error, null);
         } else {
+            //console.log('response dentro de users.js', response);
             if(response.password === user.password) {
-                const token = generateToken(response.userID);
-                response.token = token
-                updateUser(response, fileName, (error, response) => {
+                user = response;
+                user.token = generateToken(user.id.toString());   
+                updateUser(user, fileName, (error, response) => {
                     if(error) {
                         callback(error, null);
                     } else {
                         callback(null, response)
                     }
-                })
+                });
             } else {
                 callback({
                     message: 'Wrong password'
                 }, null);
             }
         }
-    })
+    });
 }
-
-const getProfile = (token, callback) => {
-    if(!token){
-        callback('The token must be declared', null);
-    }
-    findUserByToken(token, fileName, (error, response) => {
-        if(error) {
-            callback(error, null);
-        } else {
-            callback(null, response);
-        }
-    })
-}
-
-
  
 module.exports = {
     createUser,
-    login,
-    getProfile
+    login
 }

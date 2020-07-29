@@ -12,6 +12,7 @@ function storeItem(item, fileName, callback) {
                 if(error) {
                     callback(error, null)
                 } else {
+                    item.id = response.length + 1;
                     const itemsArray = pushAndStringify(item, response);
                     writeFile(fileName, itemsArray, (error) => {
                         if(error) {
