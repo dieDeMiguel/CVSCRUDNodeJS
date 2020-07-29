@@ -4,51 +4,26 @@ const spliceAndStringify = require('./spliceAndStringify');
 const writeFile = require('./writeFile');
 
 function deleteObject(fileName, id, callback) {
-    fileName == 'items.json' ? fileName = 'items.json' : fileName = 'users.json';
     readFile(fileName, (error, response) => {
         if(error) {
             callback(error, null);
         } else {
-            if(id == parseInt(id, 10)) {
-                const item = response.find((item) => item.id == id);
-                if(item == undefined) {
-                    callback('Unable ot find an item with the provided id', null)
-                } else {
-                    const index = findIndex(item, id, response);
-                    response = spliceAndStringify(index, response);
-                    writeFile(fileName, response, (error, response)=> {
-                        if(error) {
-                            callback(error, null);
-                        } else {
-                            callback(null, 'Item #:' + id + ' was removed from memory');
-                        }
-                    })
-                }
+            const item = response.find((item) => item.id == id);
+            if(item == undefined) {
+                callback('Unable ot find an object with the provided id', null)
             } else {
-                readFile(fileName, (error, response) => {
+                const index = findIndex(item, id, response);
+                response = spliceAndStringify(index, response);
+                writeFile(fileName, response, (error, response)=> {
                     if(error) {
                         callback(error, null);
                     } else {
-                        const item = response.find((user)=>user.email == id);
-                        if(item == undefined) {
-                            callback('Unable to find a User with the provided email', null);
-                        } else {
-                            const index = findIndex(item, id, response);
-                            response = spliceAndStringify(index, response);
-                            writeFile(fileName, response, (error) => {
-                                if(error) {
-                                    callback(error, null);
-                                } else {
-                                    callback(null, 'The User with email: ' + id + ' was removed from memory');
-                                }
-                            })
-                        }
+                        callback(null, 'Objecto with ID #:' + id + ' was removed from memory');
                     }
                 })
-                
             }
         }
-    })
+    });
 }
 
   module.exports = deleteObject;
