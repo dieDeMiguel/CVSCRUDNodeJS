@@ -1,21 +1,24 @@
-const checkEmailIsUnique = require('../utils/checkEmailIsUnique');
+const checkIfUnique = require('../utils/checkIfUnique');
 const storeItem = require('../utils/storeitem');
-const getItemByEmail = require('../utils/getItemByEmail');
+const find = require('../utils/find');
 const fileName = 'users.json';
+const generateToken = require('../utils/generateToken');
+const updateUser = require('../utils/updateUser');
 
 const createUser = (user, callback) => {
     if(!user.email) {
         return callback('The user must have en email', null)
     }
-    checkEmailIsUnique(user.email, fileName, (error) => {
+    checkIfUnique(user.email, fileName, (error) => {
         if(error) {
             return callback(error, null);
         } 
-        storeItem(user,fileName, (error, response) => {
+        storeItem(user,fileName, (error) => {
             if(error) {
                 callback(error, null);
             } else {
                 callback(null, {
+                    id: user.id,
                     name: user.name,
                     lastName: user.lastName,
                     email: user.email
@@ -27,24 +30,28 @@ const createUser = (user, callback) => {
 }
 
 const login = (user, callback) => {
-    getItemByEmail(fileName, user.email, (error, response) => {
+    find(user.id.toString(), fileName, (error, response) => {
         if(error) {
             callback(error, null);
         } else {
             if(response.password === user.password) {
-                callback(null, {
-                    message: "User succesfully logged"
-                })
+                user = response;
+                user.token = generateToken(user.id.toString());   
+                updateUser(user, fileName, (error, response) => {
+                    if(error) {
+                        callback(error, null);
+                    } else {
+                        callback(null, response)
+                    }
+                });
             } else {
                 callback({
                     message: 'Wrong password'
                 }, null);
             }
         }
-    })
+    });
 }
-
-
  
 module.exports = {
     createUser,
