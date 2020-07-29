@@ -8,7 +8,6 @@ function checkIfUnique(id, fileName, callback) {
             callback(false, null);
         } else {
             if(id == parseInt(id)) {
-                console.log('id', id)
                 item = response.find((item) => item.id == id);
                 if(item === undefined) {
                     callback(null, true);

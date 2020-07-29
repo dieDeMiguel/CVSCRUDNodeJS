@@ -34,7 +34,6 @@ const login = (user, callback) => {
         if(error) {
             callback(error, null);
         } else {
-            //console.log('response dentro de users.js', response);
             if(response.password === user.password) {
                 user = response;
                 user.token = generateToken(user.id.toString());   
