@@ -7,7 +7,7 @@ function checkIfUnique(id, fileName, callback) {
         if(error) {
             callback(false, null);
         } else {
-            if(id == parseInt(id)) {
+            if(typeof id === Number) {
                 item = response.find((item) => item.id == id);
                 if(item === undefined) {
                     callback(null, true);

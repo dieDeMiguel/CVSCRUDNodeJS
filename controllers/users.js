@@ -1,9 +1,11 @@
 const checkIfUnique = require('../utils/checkIfUnique');
 const storeItem = require('../utils/storeitem');
 const find = require('../utils/find');
-const fileName = 'users.json';
 const generateToken = require('../utils/generateToken');
 const updateUser = require('../utils/updateUser');
+const decryptToken = require('../utils/decryptToken');
+const { response } = require('express');
+const fileName = 'users.json';
 
 const createUser = (user, callback) => {
     if(!user.email) {
@@ -18,7 +20,6 @@ const createUser = (user, callback) => {
                 callback(error, null);
             } else {
                 callback(null, {
-                    id: user.id,
                     name: user.name,
                     lastName: user.lastName,
                     email: user.email
@@ -30,7 +31,7 @@ const createUser = (user, callback) => {
 }
 
 const login = (user, callback) => {
-    find(user.id.toString(), fileName, (error, response) => {
+    find(user.email, fileName, (error, response) => {
         if(error) {
             callback(error, null);
         } else {
@@ -50,10 +51,24 @@ const login = (user, callback) => {
                 }, null);
             }
         }
+    })
+}
+
+const getProfile = (token, callback) => {
+    if(!token){
+        callback('The token must be declared', null);
+    }
+    decryptToken(token, fileName, (error, response) => {
+        if(error) {
+            callback(error, null);
+        } else {
+            callback(null, response);
+        }
     });
 }
  
 module.exports = {
     createUser,
-    login
+    login, 
+    getProfile
 }

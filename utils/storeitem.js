@@ -12,15 +12,26 @@ function storeItem(item, fileName, callback) {
                 if(error) {
                     callback(error, null)
                 } else {
-                    item.id = response.length + 1;
-                    const itemsArray = pushAndStringify(item, response);
-                    writeFile(fileName, itemsArray, (error) => {
-                        if(error) {
-                            callback(error, null)
-                        } else {
-                            callback(null, 'The file has been updated, the new name is ' + item.name);
-                        }
-                    })
+                    if(item.id) {
+                        const itemsArray = pushAndStringify(item, response);
+                        writeFile(fileName, itemsArray, (error) => {
+                            if(error) {
+                                callback(error, null)
+                            } else {
+                                callback(null, 'The file has been updated, the new name is ' + item.name);
+                            }
+                        });
+                    } else {
+                        item.id = response.length + 1;
+                        const itemsArray = pushAndStringify(item, response);
+                        writeFile(fileName, itemsArray, (error) => {
+                            if(error) {
+                                callback(error, null)
+                            } else {
+                                callback(null, 'The file has been updated, the new name is ' + item.name);
+                            }
+                        })
+                    }
                 }
             })         
         } else { 
