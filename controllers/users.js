@@ -1,17 +1,21 @@
-const checkEmailIsUnique = require('../utils/checkEmailIsUnique');
+const checkIfUnique = require('../utils/checkIfUnique');
 const storeItem = require('../utils/storeitem');
-const getItemByEmail = require('../utils/getItemByEmail');
+const find = require('../utils/find');
+const generateToken = require('../utils/generateToken');
+const updateUser = require('../utils/updateUser');
+const decryptToken = require('../utils/decryptToken');
+const { response } = require('express');
 const fileName = 'users.json';
 
 const createUser = (user, callback) => {
     if(!user.email) {
         return callback('The user must have en email', null)
     }
-    checkEmailIsUnique(user.email, fileName, (error) => {
+    checkIfUnique(user.email, fileName, (error) => {
         if(error) {
             return callback(error, null);
         } 
-        storeItem(user,fileName, (error, response) => {
+        storeItem(user,fileName, (error) => {
             if(error) {
                 callback(error, null);
             } else {
@@ -27,14 +31,20 @@ const createUser = (user, callback) => {
 }
 
 const login = (user, callback) => {
-    getItemByEmail(fileName, user.email, (error, response) => {
+    find(user.email, fileName, (error, response) => {
         if(error) {
             callback(error, null);
         } else {
             if(response.password === user.password) {
-                callback(null, {
-                    message: "User succesfully logged"
-                })
+                user = response;
+                user.token = generateToken(user.id.toString());   
+                updateUser(user, fileName, (error, response) => {
+                    if(error) {
+                        callback(error, null);
+                    } else {
+                        callback(null, response)
+                    }
+                });
             } else {
                 callback({
                     message: 'Wrong password'
@@ -44,9 +54,21 @@ const login = (user, callback) => {
     })
 }
 
-
+const getProfile = (token, callback) => {
+    if(!token){
+        callback('The token must be declared', null);
+    }
+    decryptToken(token, fileName, (error, response) => {
+        if(error) {
+            callback(error, null);
+        } else {
+            callback(null, response);
+        }
+    });
+}
  
 module.exports = {
     createUser,
-    login
+    login, 
+    getProfile
 }
